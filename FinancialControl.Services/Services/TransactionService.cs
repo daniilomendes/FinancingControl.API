@@ -1,4 +1,5 @@
-﻿using FinancialControl.Models.Entities;
+﻿using FinancialControl.Models.DTOs;
+using FinancialControl.Models.Entities;
 using FinancialControl.Services.Services.Intefaces;
 
 namespace FinancialControl.Services.Services
@@ -7,10 +8,17 @@ namespace FinancialControl.Services.Services
     {
         private readonly List<Transaction> _transactions = new();
 
-        public Transaction Add(Transaction transacrion)
+        public Transaction Add(CreateTransactionDto transacrionDTO)
         {
-            _transactions.Add(transacrion);
-            return transacrion;
+            if (transacrionDTO.Amount <= 0)
+            {
+                throw new ArgumentException("O valor deve ser maior que zero.");
+            }
+
+            Transaction newTransaction = new(transacrionDTO.Description, transacrionDTO.Amount, transacrionDTO.Type);
+
+            _transactions.Add(newTransaction);
+            return newTransaction;
         }
 
         public List<Transaction> GetTransactions()

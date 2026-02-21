@@ -1,4 +1,5 @@
-﻿using FinancialControl.Models.Entities;
+﻿using FinancialControl.Models.DTOs;
+using FinancialControl.Models.Entities;
 using FinancialControl.Services.Services.Intefaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,10 +17,17 @@ namespace FinancingControl.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Transaction transaction)
+        public IActionResult Create([FromBody] CreateTransactionDto transaction)
         {
-            var transactionCreated = _transactionService.Add(transaction);
-            return Ok(transactionCreated);
+            try
+            {
+                var transactionCreated = _transactionService.Add(transaction);
+                return Ok(transactionCreated);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
