@@ -23,6 +23,11 @@ namespace FinancialControl.Services.Services
 
         public List<Transaction> GetTransactions()
         {
+            if (!_transactions.Any())
+            {
+                throw new InvalidOperationException("Nenhuma transação registrada até o momento.");
+            }
+
             return _transactions;
         }
     }

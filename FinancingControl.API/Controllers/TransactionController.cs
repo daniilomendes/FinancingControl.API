@@ -33,8 +33,15 @@ namespace FinancingControl.API.Controllers
         [HttpGet]
         public IActionResult GetTransactions()
         {
-            List<Transaction> transactions = _transactionService.GetTransactions();
-            return Ok(transactions);
+            try
+            {
+                List<Transaction> transactions = _transactionService.GetTransactions();
+                return Ok(transactions);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }
