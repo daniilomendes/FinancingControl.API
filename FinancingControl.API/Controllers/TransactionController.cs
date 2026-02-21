@@ -1,5 +1,6 @@
 ﻿using FinancialControl.Models.DTOs;
 using FinancialControl.Models.Entities;
+using FinancialControl.Models.Response;
 using FinancialControl.Services.Services.Intefaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,11 +23,11 @@ namespace FinancingControl.API.Controllers
             try
             {
                 var transactionCreated = _transactionService.Add(transaction);
-                return Ok(transactionCreated);
+                return Ok(ApiResponse<Transaction>.Success(transactionCreated));
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ApiResponse<Transaction>.Failure(ex.Message));
             }
         }
 
@@ -36,11 +37,11 @@ namespace FinancingControl.API.Controllers
             try
             {
                 List<Transaction> transactions = _transactionService.GetTransactions();
-                return Ok(transactions);
+                return Ok(ApiResponse<List<Transaction>>.Success(transactions));
             }
             catch (InvalidOperationException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(ApiResponse<Transaction>.Failure(ex.Message));
             }
         }
 
@@ -50,11 +51,11 @@ namespace FinancingControl.API.Controllers
             try
             {
                 Transaction transaction = _transactionService.GetById(id);
-                return Ok(transaction);
+                return Ok(ApiResponse<Transaction>.Success(transaction));
             }
             catch (InvalidOperationException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(ApiResponse<Transaction>.Failure(ex.Message));
             }
         }
 
@@ -64,11 +65,11 @@ namespace FinancingControl.API.Controllers
             try
             {
                 List<Transaction> transactions = _transactionService.GetTransactionsByType(type);
-                return Ok(transactions);
+                return Ok(ApiResponse<List<Transaction>>.Success(transactions));
             }
             catch (InvalidOperationException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(ApiResponse<Transaction>.Failure(ex.Message));
             }
         }
 
@@ -77,12 +78,13 @@ namespace FinancingControl.API.Controllers
         {
             try
             {
+
                 var transactions = _transactionService.GetBalance();
-                return Ok(transactions);
+                return Ok(ApiResponse<TransactionBalance>.Success(transactions));
             }
             catch (InvalidOperationException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(ApiResponse<TransactionBalance>.Failure(ex.Message));
             }
         }
 
@@ -92,11 +94,11 @@ namespace FinancingControl.API.Controllers
             try
             {
                 var transactions = _transactionService.GetBalanceByType(type);
-                return Ok(transactions);
+                return Ok(ApiResponse<TransactionBalance>.Success(transactions));
             }
             catch (InvalidOperationException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(ApiResponse<TransactionBalance>.Failure(ex.Message));
             }
         }
     }

@@ -33,7 +33,7 @@ namespace FinancialControl.Services.Services
 
         public Transaction GetById(int id)
         {
-            Transaction transaction = _transactions.FirstOrDefault(x => x.Id == id);
+            var transaction = _transactions.FirstOrDefault(x => x.Id == id);
 
             if (transaction == null)
             {
@@ -55,7 +55,7 @@ namespace FinancialControl.Services.Services
             return transactions;
         }
 
-        public TransactionBalanceDTO GetBalance()
+        public TransactionBalance GetBalance()
         {
             double total = _transactions.Sum(x => x.Amount);
 
@@ -64,7 +64,7 @@ namespace FinancialControl.Services.Services
                 throw new InvalidOperationException("Nenhuma transação registrada até o momento.");
             }
 
-            TransactionBalanceDTO balance = new()
+            TransactionBalance balance = new()
             {
                 Balance = total
             };
@@ -72,7 +72,7 @@ namespace FinancialControl.Services.Services
             return balance;
         }
 
-        public TransactionBalanceDTO GetBalanceByType(string type)
+        public TransactionBalance GetBalanceByType(string type)
         {
             double totalBalance = _transactions.Where(x => x.Type.Equals(type)).Sum(t => t.Amount);
 
@@ -81,7 +81,7 @@ namespace FinancialControl.Services.Services
                 throw new InvalidOperationException($"Nenhum balanço do tipo {type} foi encontrada.");
             }
 
-            TransactionBalanceDTO balance = new()
+            TransactionBalance balance = new()
             {
                 Balance = totalBalance
             };
