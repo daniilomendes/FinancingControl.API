@@ -9,5 +9,6 @@ namespace FinancialControl.Services.Services.Intefaces
         Transaction Add(CreateTransactionDto transacrion);
         List<Transaction> GetTransactions();
         Transaction GetById(int id);
+        List<Transaction> GetTransactionsByType(string type);
     }
 }

@@ -42,5 +42,17 @@ namespace FinancialControl.Services.Services
 
             return transaction;
         }
+
+        public List<Transaction> GetTransactionsByType(string type)
+        {
+            List<Transaction> transactions = _transactions.Where(x => x.Type.Equals(type)).ToList();
+
+            if (!transactions.Any())
+            {
+                throw new InvalidOperationException("Nenhuma transação não encontrada.");
+            }
+
+            return transactions;
+        }
     }
 }

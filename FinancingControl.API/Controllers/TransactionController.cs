@@ -57,5 +57,19 @@ namespace FinancingControl.API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpGet("/type/{type}")]
+        public IActionResult GetTransactionsByType(string type)
+        {
+            try
+            {
+                List<Transaction> transactions = _transactionService.GetTransactionsByType(type);
+                return Ok(transactions);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }
