@@ -10,5 +10,8 @@ namespace FinancialControl.Services.Services.Intefaces
         List<Transaction> GetTransactions();
         Transaction GetById(int id);
         List<Transaction> GetTransactionsByType(string type);
+        TransactionBalanceDTO GetBalance();
+        TransactionBalanceDTO GetBalanceByType(string type);
+
     }
 }

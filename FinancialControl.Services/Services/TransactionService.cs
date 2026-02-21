@@ -49,10 +49,44 @@ namespace FinancialControl.Services.Services
 
             if (!transactions.Any())
             {
-                throw new InvalidOperationException("Nenhuma transação não encontrada.");
+                throw new InvalidOperationException($"Nenhuma transação do tipo {type} foi encontrada.");
             }
 
             return transactions;
+        }
+
+        public TransactionBalanceDTO GetBalance()
+        {
+            double total = _transactions.Sum(x => x.Amount);
+
+            if (total == 0)
+            {
+                throw new InvalidOperationException("Nenhuma transação registrada até o momento.");
+            }
+
+            TransactionBalanceDTO balance = new()
+            {
+                Balance = total
+            };
+
+            return balance;
+        }
+
+        public TransactionBalanceDTO GetBalanceByType(string type)
+        {
+            double totalBalance = _transactions.Where(x => x.Type.Equals(type)).Sum(t => t.Amount);
+
+            if (totalBalance == 0)
+            {
+                throw new InvalidOperationException($"Nenhum balanço do tipo {type} foi encontrada.");
+            }
+
+            TransactionBalanceDTO balance = new()
+            {
+                Balance = totalBalance
+            };
+
+            return balance;
         }
     }
 }
